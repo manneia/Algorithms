@@ -502,4 +502,35 @@ public class Solution {
         ans.reverse();
         return ans.toString();
     }
+
+    /**
+     * 实现一个函数，该函数接收一个整数 x，并返回其平方根的整数部分。
+     *
+     * @param x 整数。
+     * @return 平方根的整数部分。
+     * @description 使用牛顿迭代法求解浮点数 x 的平方根。
+     *
+     */
+    public static int sqrt(int x) {
+        // 如果x为0，直接返回0
+        if (x == 0) {
+            return 0;
+        }
+        // 初始化迭代的起点和当前估计值
+        double C = x, x0 = x;
+        // 迭代直到满足精度要求
+        while (true) {
+            // 根据牛顿迭代法更新估计值
+            double xi = 0.5 * (x0 + C / x0);
+            // 如果当前估计值与上一次的估计值之差小于给定的精度，则停止迭代
+            if (Math.abs(x0 - xi) < 1e-7) {
+                break;
+            }
+            // 更新当前估计值
+            x0 = xi;
+        }
+        // 返回最终结果的整数部分
+        return (int) x0;
+    }
+
 }
