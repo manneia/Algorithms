@@ -539,6 +539,18 @@ public class Solution {
 	 * @return 爬楼梯的方法数。
 	 */
 	public int climbStairs(int n) {
-		return 0;
+		if (n == 0 || n == 1) {
+			return 1;
+		}
+		if (n == 2) {
+			return 2;
+		}
+		int a = 1, b = 1, sum;
+		for (int i = 0; i < n - 1; i++) {
+			sum = a + b;
+			a = b;
+			b = sum;
+		}
+		return b;
 	}
 }
