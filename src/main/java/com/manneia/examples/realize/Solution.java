@@ -1,7 +1,10 @@
 package com.manneia.examples.realize;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import com.manneia.examples.realize.TreeNode;
 
 /**
  * 算法合集
@@ -573,5 +576,92 @@ public class Solution {
 			}
 		}
 		return head;
+	}
+
+	/**
+	 * 合并两个有序数组。
+	 * 将nums1和nums2中的元素合并到nums1中，要求合并后的nums1仍然是有序的。
+	 * 假设nums1有足够的空间（长度等于m + n）来保存合并后的数组。
+	 *
+	 * @param nums1 第一个有序数组，合并后的元素将存储在这个数组中
+	 * @param m     nums1中原有的元素个数
+	 * @param nums2 第二个有序数组，需要合并到nums1中
+	 * @param n     nums2中原有的元素个数
+	 */
+	public void merge(int[] nums1, int m, int[] nums2, int n) {
+		/* 初始化两个指针，分别指向nums1和nums2的起始位置 */
+		int p1 = 0, p2 = 0;
+		/* 创建一个新数组sorted用于存储合并后的有序数组 */
+		int[] sorted = new int[m + n];
+		/* 用于遍历合并后的数组的指针 */
+		int cur;
+		/* 当任一数组还有元素未被合并时，继续循环 */
+		while (p1 < m || p2 < n) {
+			/* 如果nums1中的元素已全部合并完，取nums2中剩余的元素 */
+			if (p1 == m) {
+				cur = nums2[p2++];
+			} else if (p2 == n) {
+				/* 如果nums2中的元素已全部合并完，取nums1中剩余的元素 */
+				cur = nums1[p1++];
+			} else if (nums1[p1] < nums2[p2]) {
+				/* 如果nums1当前元素小于nums2当前元素，取nums1的元素 */
+				cur = nums1[p1++];
+			} else {
+				/* 否则，取nums2的元素 */
+				cur = nums2[p2++];
+			}
+			/* 将当前最小元素放入合并后的数组sorted中 */
+			sorted[p1 + p2 - 1] = cur;
+		}
+		/* 如果合并后的数组非空，将sorted中的元素复制回nums1 */
+		if (m + n >= 0) {
+			System.arraycopy(sorted, 0, nums1, 0, m + n);
+		}
+	}
+
+	/**
+	 * 中序遍历二叉树
+	 * 
+	 * @param root 根节点
+	 * @return 返回中序遍历结果
+	 */
+	public List<Integer> inorderTraversal(TreeNode root) {
+		List<Integer> res = new ArrayList<>();
+		inorder(root, res);
+		return res;
+	}
+
+	/**
+	 * 中序遍历二叉树
+	 * 
+	 * @param root 根节点
+	 * @param res  结果列表
+	 */
+	public void inorder(TreeNode root, List<Integer> res) {
+		if (root == null) {
+			return;
+		}
+		inorder(root.left, res);
+		res.add(root.val);
+		inorder(root.right, res);
+	}
+
+	/**
+	 * 判断两棵二叉树是否相同
+	 * 
+	 * @param p 二叉树1
+	 * @param q 二叉树2
+	 * @return 两棵二叉树是否相同
+	 */
+	public boolean isSameTree(TreeNode p, TreeNode q) {
+		if (p == null && q == null) {
+			return true;
+		} else if (p == null || q == null) {
+			return false;
+		} else if (p.val != q.val) {
+			return false;
+		} else {
+			return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+		}
 	}
 }
