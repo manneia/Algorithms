@@ -664,4 +664,24 @@ public class Solution {
 			return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 		}
 	}
+
+	/**
+	 * 判断二叉树是否对称
+	 *
+	 * @param root 二叉树根节点
+	 * @return 是否对称
+	 */
+	public boolean isSymmetric(TreeNode root) {
+		return check(root, root);
+	}
+
+	public boolean check(TreeNode p, TreeNode q) {
+		if (p == null && q == null) {
+			return true;
+		}
+		if (p == null || q == null) {
+			return false;
+		}
+		return p.val == q.val && check(p.left, q.right) && check(p.right, q.left);
+	}
 }
